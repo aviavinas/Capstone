@@ -1,3 +1,5 @@
+import io
+import requests
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,7 +11,8 @@ from tensorflow.keras import layers
 def mlModel(request):
     req = request.get_json()
 
-    data=pd.read_csv("datasets/Ricebowl.csv")
+    remoteF=requests.get(url).content
+    data=pd.read_csv(io.StringIO(remoteF.decode('utf-8')))
 
     print(data.info())
     print(data.head())
