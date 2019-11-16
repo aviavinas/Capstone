@@ -18,7 +18,8 @@ Keras==2.2.5
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 keras-vis==0.4.1
-requests==2.21.0
+sklearn==0.0
+sklearn-pandas==1.8.0
 
 
 
@@ -320,8 +321,6 @@ setuptools-git==1.2
 Shapely==1.6.4.post2
 simplegeneric==0.8.1
 six==1.12.0
-sklearn==0.0
-sklearn-pandas==1.8.0
 smart-open==1.9.0
 snowballstemmer==2.0.0
 sortedcontainers==2.1.0

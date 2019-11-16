@@ -1,5 +1,4 @@
-import io
-import requests
+import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,28 +6,16 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
-
-def mlModel(request):
+def getForecast(request):
     req = request.get_json()
 
-    remoteF=requests.get(url).content
-    data=pd.read_csv(io.StringIO(remoteF.decode('utf-8')))
-
-    print(data.info())
-    print(data.head())
-
+    data=pd.read_csv("https://raw.githubusercontent.com/aviavinas/Capstone/master/datasets/Ricebowl.csv")
     data=data.drop(columns=["Item","price","inventory_to_sale_ratio"])
 
     from sklearn.preprocessing import LabelEncoder
     lbe=LabelEncoder()
     data["day"]=lbe.fit_transform(data["day"])
     data["Weather"]=lbe.fit_transform(data["Weather"])
-
-    print(data.head())
-
-    print(data.day.unique())
-    print(data.Weather.unique())
-
     days = data.pop('day')
     data['Monday'] = (days == 1)*1
     data['Tuesday'] = (days == 5)*1
@@ -49,23 +36,15 @@ def mlModel(request):
 
     data=data.drop(columns=['Weather_Bad','Crowd_No',"max_capacity","Crowd"])
 
-    print(data.info())
-    print(data.head())
-
     train_dataset=data.sample(frac=0.7, random_state=0)
     test_dataset=data.drop(train_dataset.index)
-
-    print(train_dataset.shape)
-    print(test_dataset.shape)
-
+    
     #train_crowd_labels=train_dataset.pop("Crowd")
     #test_crowd_labels=test_dataset.pop("Crowd")
 
     train_stats= train_dataset.describe()
     train_stats.pop("count sell")
-    train_stats=train_stats.transpose()
-    print(train_stats)
-        
+    train_stats=train_stats.transpose()        
 
     train_labels=train_dataset.pop("count sell")
     test_labels=test_dataset.pop("count sell")
@@ -85,6 +64,7 @@ def mlModel(request):
                 layers.Dense(64,activation="relu"),
                 layers.Dense(1)                        
         ])
+
         opt=tf.keras.optimizers.RMSprop(0.001)
         model.compile(loss='mse',
                     optimizer=opt,
@@ -97,8 +77,6 @@ def mlModel(request):
 
     batch=norm_train_data[:10]
     result=model.predict(batch)
-    print(result)
-
 
     iter=1000
 
@@ -116,14 +94,15 @@ def mlModel(request):
 
     def prediction(data):
         predictions=np.round(model.predict(data))
-        print("Sells:",predictions)
+        return predictions
 
     def getArgs():
-        time=int(req['hour'])
-        
         day=int(req['day'])
-        daylist=[0,0,0,0,0,0,0]
+        time=int(req['hour'])
+        weather=int(req['weather'])
         
+        daylist=[0,0,0,0,0,0,0]
+
         def check(daylist,day):
             daylist[day-1]=1
             return daylist
@@ -131,14 +110,12 @@ def mlModel(request):
         newdaylist=check(daylist,day)
         for i in range(len(newdaylist)):
             newdaylist[i]
-        
-        
-        Weather=int(req['weather'])
-        
-        return np.array([[time,newdaylist[0],newdaylist[1],newdaylist[2],newdaylist[3],newdaylist[4],newdaylist[5],newdaylist[6],Weather]])
+                
+        return np.array([[time,newdaylist[0],newdaylist[1],newdaylist[2],newdaylist[3],newdaylist[4],newdaylist[5],newdaylist[6],weather]])
     
         
-    prediction(getArgs())
+    pr = prediction(getArgs())
+    out = str(math.floor(pr[0][0]))
+    print("Output : ",out)
 
-
-
+    return out
