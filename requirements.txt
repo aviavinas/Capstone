@@ -4,7 +4,9 @@
   "weather":1
 }
 
-https://storage.googleapis.com/staging.stanbuzzapp.appspot.com/datasets/Ricebowl.csv
+Enter 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday, 7: Sunday
+WEATHER:- 1 for GOOD & 0 for BAD
+TIME From 10 AM TO 22 PM
 
 numpy==1.17.4
 pandas==0.25.3
@@ -20,6 +22,7 @@ Keras-Preprocessing==1.1.0
 keras-vis==0.4.1
 sklearn==0.0
 sklearn-pandas==1.8.0
+google-cloud-firestore==1.6.0
 
 
 

@@ -1,13 +1,16 @@
 import math
+import datetime
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+from google.cloud import firestore
 
-def getForecast(request):
-    req = request.get_json()
+def todayForecast(request):
+    item_id="DQRP4NDTzWkRGZmnK8Ol"
+    db = firestore.Client()
 
     data=pd.read_csv("https://raw.githubusercontent.com/aviavinas/Capstone/master/datasets/Ricebowl.csv")
     data=data.drop(columns=["Item","price","inventory_to_sale_ratio"])
@@ -96,11 +99,7 @@ def getForecast(request):
         predictions=np.round(model.predict(data))
         return predictions
 
-    def getArgs():
-        day=int(req['day'])
-        time=int(req['hour'])
-        weather=int(req['weather'])
-        
+    def getArgs(time,day,weather):        
         daylist=[0,0,0,0,0,0,0]
 
         def check(daylist,day):
@@ -113,9 +112,20 @@ def getForecast(request):
                 
         return np.array([[time,newdaylist[0],newdaylist[1],newdaylist[2],newdaylist[3],newdaylist[4],newdaylist[5],newdaylist[6],weather]])
     
-        
-    pr = prediction(getArgs())
-    out = str(math.floor(pr[0][0]))
-    print("Output : ",out)
+    def predFor(time,weather):
+        week_day=["","mon","tue","wed","thu","fri","sat", "sun"]
+        d = datetime.datetime.today().weekday()+1
+        pr = prediction(getArgs(time, d, weather))
 
-    return out
+        db.collection('forecast').document(item_id+"_"+week_day[d]+"_"+str(time)+"_"+str(weather)).set({
+            'val': str(math.floor(pr[0][0])),
+            'date': datetime.datetime.now()
+        })
+
+    def todayF():
+        for h in range(6,23,2):
+            predFor(h,1)
+            predFor(h,0)
+
+    todayF()
+    return "Ok"
