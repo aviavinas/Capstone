@@ -89,3 +89,8 @@ function analyze() {
 analyze();
 getPred("DQRP4NDTzWkRGZmnK8Ol");
 drawChart([0,5,63,41,95,28,55,89,34]);
+
+
+
+// Call functions
+$.get("https://salest.firebaseapp.com/engine", (r) => console.log(r))
