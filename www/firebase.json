@@ -6,11 +6,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
+    "rewrites": [{
         "source": "/engine",
         "function": "engine"
-      }
-    ]
+      }, {
+        "source": "/api",
+        "function": "engineApi"
+      }]
   }
 }

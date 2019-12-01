@@ -31,6 +31,8 @@
       .card3 {background-image: linear-gradient(to bottom right, #d6ee51, #2fcbd8);}
       .rect {background-color: #f0f3f8; height: 88px; margin-bottom: 16px; border-radius: 8px;}
       .cont {background-color: #fdfdfd;}
+      #weatherMap img {width: 30px; height: 30px; display: block; margin-bottom: 5px;}
+      #weatherMap .col-1 {font-size: 12px;font-weight: 600;}
   </style>
 </head>
 <body>
@@ -47,23 +49,7 @@
                                 <th class="text-muted font-weight-normal" scope="col">Inventory</th>
                             </tr>
                         </thead>
-                        <tbody class="text-muted font-weight-bold">
-                            <tr>
-                                <td>Mark</td>
-                                <td>23</td>
-                                <td>42</td>
-                            </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>55</td>
-                                <td>32</td>
-                            </tr>
-                            <tr>
-                                <td>Larry the Bird</td>
-                                <td>18</td>
-                                <td>123</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="prod" class="text-muted font-weight-bold"></tbody>
                     </table>
                 </div>
                 <div>
@@ -91,6 +77,11 @@
         <div class="col-md-8 col-8 cont">
             <div class="row p-3">
                 <div class="col-4 col-md-4">
+                    <div class="card card3 text-light p-3 m-1">
+
+                    </div>                    
+                </div>
+                <div class="col-4 col-md-4">
                     <div class="card card1 text-light p-3 m-1">
                         <div id="invProd" class="display-4 text-center mb-2">0</div>
                         <small class="text-center">Products are still left in inventory</small>
@@ -102,16 +93,13 @@
                         <small class="text-center">Products contains below 1 days expiry</small>
                     </div>                    
                 </div>    
-                <div class="col-4 col-md-4">
-                    <div class="card card3 text-light p-3 m-1">
-                        <div class="display-4 text-center mb-2">12345</div>
-                        <small>Products contains below 190 days expiry</small>
-                    </div>                    
-                </div>    
             </div>
             <div class="p-3 mt-3">
                 <canvas id="myChart" width="500px" height="200px"></canvas>
             </div>
+            <div id="weatherMap" class="p-3 mt-3 row">
+            </div>
+
             <script src="js/main.js"></script>
         </div>
     </div>
