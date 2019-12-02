@@ -12,6 +12,9 @@
       }, {
         "source": "/api",
         "function": "engineApi"
+      }, {
+        "source": "/speak",
+        "function": "speak"
       }]
   }
 }

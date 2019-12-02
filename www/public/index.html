@@ -6,37 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link id="favicon" rel="icon" type="image/x-icon" href="css/favicon.png">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/Chart.min.js"></script>
   <script src="js/firebase-app.js"></script>
   <script src="js/firebase-firestore.js"></script>  
-  <style>
-      body {
-          width: 100%;
-          margin: 0;
-          height: 100%;
-          overflow-x: hidden;
-      }
-      .card {
-          height: 150px;
-          margin: 25px;
-          border-radius: 20px;
-          border: 0;
-          background-color: #fafafa;
-      }
-      thead tr {color: #666;}
-      .card1 {background-image: linear-gradient(to bottom right, #cc6df4, #2f41df);}
-      .card2 {background-image: linear-gradient(to bottom right, #f65c86, #bc15bd);}
-      .card3 {background-image: linear-gradient(to bottom right, #d6ee51, #2fcbd8);}
-      .rect {background-color: #f0f3f8; height: 88px; margin-bottom: 16px; border-radius: 8px;}
-      .cont {background-color: #fdfdfd;}
-      #weatherMap img {width: 30px; height: 30px; display: block; margin-bottom: 5px;}
-      #weatherMap .col-1 {font-size: 12px;font-weight: 600;}
-  </style>
 </head>
-<body>
-    <div class="row">
+<body onload="main()">
+    <div id="loader-cont"><div id="loader"></div></div>
+    <div id="master" class="row">
         <div class="col-md-4 col-4 pl-0 pr-5 cont">
             <div class="jumbotron pt-3" style="background-color: white;box-shadow: 2px 0px 6px #eef1f7; border-right:1px solid #eee;min-height: 100vh;">
                 <div style="min-height: 65vh;">
@@ -52,53 +31,13 @@
                         <tbody id="prod" class="text-muted font-weight-bold"></tbody>
                     </table>
                 </div>
-                <div>
-                    <div class="rect row ml-0">
-                        <div class="col-8 col-md-8 pt-3 pl-4 pb-2">
-                            <small class="text-muted">Total Risk Quantity</small>
-                            <p class="text-primary mt-2">12345</p>
-                        </div>
-                        <div class="col-4 col-md-4 p-1">
-                            <canvas id="myPie" width="200" height="200"></canvas>
-                        </div>
-                    </div>
-                    <div class="rect row ml-0">
-                        <div class="col-8 col-md-8 pt-3 pl-4 pb-2">
-                            <p class="mb-0">Sold Products</p>
-                            <small class="text-muted">Today</small>
-                        </div>
-                        <div class="col-4 col-md-4 p-4">
-                            <h4 id="soldProd" class="text-primary font-weight-normal">0</h4>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-md-8 col-8 cont">
-            <div class="row p-3">
-                <div class="col-4 col-md-4">
-                    <div class="card card3 text-light p-3 m-1">
-
-                    </div>                    
-                </div>
-                <div class="col-4 col-md-4">
-                    <div class="card card1 text-light p-3 m-1">
-                        <div id="invProd" class="display-4 text-center mb-2">0</div>
-                        <small class="text-center">Products are still left in inventory</small>
-                    </div>                    
-                </div>    
-                <div class="col-4 col-md-4">
-                    <div class="card card2 text-light p-3 m-1">
-                        <div id="oneDayEx" class="display-4 text-center mb-2">0</div>
-                        <small class="text-center">Products contains below 1 days expiry</small>
-                    </div>                    
-                </div>    
-            </div>
             <div class="p-3 mt-3">
                 <canvas id="myChart" width="500px" height="200px"></canvas>
             </div>
-            <div id="weatherMap" class="p-3 mt-3 row">
-            </div>
+            <div id="weatherMap" class="p-2 row"></div>
 
             <script src="js/main.js"></script>
         </div>

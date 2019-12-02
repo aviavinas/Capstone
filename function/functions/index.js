@@ -1,19 +1,27 @@
-/* eslint-disable promise/always-return */
-const functions = require('firebase-functions');
-const axios = require('axios');
+const textToSpeech = require('@google-cloud/text-to-speech');
+const fs = require('fs');
+const util = require('util');
 
-exports.api = function api(req, res) {
-    res.set('Access-Control-Allow-Origin', "*")
-    res.set('Access-Control-Allow-Methods', 'GET, POST')
+exports.speak = (req, res) => {
+    async function main() {
+      const client = new textToSpeech.TextToSpeechClient();
+      const text = req.body.msg;
 
-    axios.get('https://salest.firebaseapp.com/engine', {
-        params: {
-          ID: 12345
-        }
-      }).then((response) => {
-        console.log(response);
-        res.status(200).send('weeee!');
-    }).catch((error) => {
-        console.log(error);
-      });
+      const request = {
+        input: {text: text},
+        voice: { languageCode: "hi-IN", name: "hi-IN-Wavenet-A" },
+        audioConfig: { audioEncoding: 'MP3', pitch: 0, speakingRate: 0.96 },
+      };
+
+      const [response] = await client.synthesizeSpeech(request);
+
+      dataBase64 = arrayBufferToBase64(response.audioContent);
+      console.log(dataBase64);
+      res.send(dataBase64);
+    }
+
+    function arrayBufferToBase64( buffer ) {
+        return Buffer.from(buffer).toString('base64')
+    }
+    main();
 };

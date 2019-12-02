@@ -1,0 +1,78 @@
+
+/* Center the loader */
+#loader-cont {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000b5;
+  z-index: 3;
+}
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+0% { -webkit-transform: rotate(0deg); }
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+position: relative;
+-webkit-animation-name: animatebottom;
+-webkit-animation-duration: 1s;
+animation-name: animatebottom;
+animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+from { bottom:-100px; opacity:0 } 
+to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+from{ bottom:-100px; opacity:0 } 
+to{ bottom:0; opacity:1 }
+}
+
+
+body {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+.card {
+    height: 150px;
+    margin: 25px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #fafafa;
+}
+thead tr {color: #666;}
+.card1 {background-image: linear-gradient(to bottom right, #cc6df4, #2f41df);}
+.card2 {background-image: linear-gradient(to bottom right, #f65c86, #bc15bd);}
+.card3 {background-image: linear-gradient(to bottom right, #d6ee51, #2fcbd8);}
+.rect {background-color: #f0f3f8; height: 88px; margin-bottom: 16px; border-radius: 8px;}
+.cont {background-color: #fdfdfd;}
+#weatherMap img {width: 30px; height: 30px; display: block; margin-bottom: 5px;}
+#weatherMap .col-1 {font-size: 12px;font-weight: 600;}
+#prod tr {cursor: pointer;}
