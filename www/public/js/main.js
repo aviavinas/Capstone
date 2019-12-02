@@ -1,9 +1,9 @@
-var chart;
+var chart, chartLabel=[];
 function drawChart(data) {
     chart = new Chart(document.getElementById('myChart').getContext('2d'), {
         type: 'line',
         data: {
-            labels: ['6 AM','8 AM','10 AM','12 PM','2 PM','4 PM','6 PM','8 PM','10 PM'],
+            labels: chartLabel,
             datasets: [{
                 label: 'Sales',
                 data: data,
@@ -41,30 +41,10 @@ firebase.initializeApp({
 });
 
 const db = firebase.firestore();
+var hrs = [], wthr = [];
 
 function daysLeft(sec) {
     return parseInt((sec-((new Date())/1000))/86400);
-}
-
-function getDay() {
-    return ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][new Date().getDay()];
-}
-
-function getPred(docId) {
-    var data = [];
-    const times = [6,8,10,12,14,16,18,20,22];
-    times.forEach(function(time) {
-        var weather = 1;
-        db.collection("forecast").doc(docId+"_"+getDay()+"_"+time+"_"+weather).get().then(function(doc) {
-            data.push(parseInt(doc.data().val));
-            if(times.length==data.length) {
-                console.log(data);
-                drawChart(data);
-            }
-        }).catch(function(error) {
-            console.log("Error getting cached document:", error);
-        });
-    });
 }
 
 function analyze() {
@@ -106,6 +86,10 @@ function handleSelect(k) {
     $.get("https://salest.firebaseapp.com/engine", (r) => console.log(r))
 }
 
+function getPred() {
+    $.get("/api?id=DQRP4NDTzWkRGZmnK8Ol&time="+hrs.join()+"&weather="+wthr.join(), (r) => console.log(r));
+}
+
 function showWeather() {
     var curHour = new Date().getHours();
     curHour = curHour<10?10:curHour;
@@ -114,10 +98,20 @@ function showWeather() {
 
     $.get("https://api.weatherbit.io/v2.0/forecast/hourly?city=Phagwara,IN&key=3a1f4eb49895428eadf479902b542b54&hours="+remH, (r) => {
         var htm="";
+        hrs=[];
+        wthr=[];
+        chartLabel=[];
         for(i=curHour; i<22; i++) {
             isGoodWeather = r.data[i-curHour].weather.code>=700;
-            htm+= '<div class="col-1"><img src="'+(isGoodWeather?"sun":"cloud")+'.png"/>'+(i==12?12:i%12)+' '+(i>=12?"PM":"AM")+'</div>';
+            timeSpell = (i==12?12:i%12)+' '+(i>=12?"PM":"AM");
+            // Save datapoints
+            hrs.push(i);
+            wthr.push(isGoodWeather?1:0);
+            chartLabel.push(timeSpell);
+            // Append to html
+            htm+= '<div class="col-1"><img src="'+(isGoodWeather?"sun":"cloud")+'.png"/>'+timeSpell+'</div>';
         }
+        getPred();
         $("#weatherMap").html(htm);            
     })
 }

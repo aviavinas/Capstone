@@ -26,4 +26,11 @@ def engineApi(request):
         print("Result @ ",time,":",result)
         return result
 
-    return prediction(int(args['time']), int(args['weather']))
+    times = args['time'].split(",")
+    wths = args['weather'].split(",")
+    output = []
+    for i, tm in enumerate(times):
+        pred = prediction(int(tm), int(wths[i]))
+        output.append(pred)
+
+    return ",".join(output)
