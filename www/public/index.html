@@ -16,16 +16,15 @@
 <body onload="main()">
     <div id="loader-cont"><div id="loader"></div></div>
     <div id="master" class="row">
-        <div class="col-md-4 col-4 pl-0 pr-5 cont">
-            <div class="jumbotron pt-3" style="background-color: white;box-shadow: 2px 0px 6px #eef1f7; border-right:1px solid #eee;min-height: 100vh;">
+        <div class="col-md-3 col-3 pl-0 pr-2 cont">
+            <div class="jumbotron pt-3 pr-1" style="background-color: white;box-shadow: 2px 0px 6px #eef1f7; border-right:1px solid #eee;min-height: 100vh;">
                 <div style="min-height: 65vh;">
                     <h4 class="text-primary text-center pt-2 pb-3">How's sales performing ?</h4>
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th class="text-muted font-weight-normal" scope="col">S.NO.</th>
                                 <th class="text-muted font-weight-normal" scope="col">Product</th>
-                                <th class="text-muted font-weight-normal" scope="col">Sold</th>
-                                <th class="text-muted font-weight-normal" scope="col">Inventory</th>
                             </tr>
                         </thead>
                         <tbody id="prod" class="text-muted font-weight-bold"></tbody>
@@ -33,7 +32,42 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 col-8 cont">
+        <div class="col-md-9 col-9 cont">
+            <div class="p-3 mt-3 row">
+                <div class="col-3 col-md-3">
+                    <img src="/play.png" id="playBtn"/>
+                    <img src="/pause.png" id="pauseBtn" class="blink"/>
+                    <select id="langSel">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                    </select>
+                </div>
+                <div class="col-9 col-md-9">
+                    <!-- Modal -->
+                    <div class="modal-content p-3">
+                        <h4 class="text-center">New Prediction</h4>
+                        <div class="modal-body">
+                            <select id="itemSel"></select>
+                            <select id="timeSel"></select>
+                            <select id="weatherSel">
+                                <option value="1">Good Weather</option>
+                                <option value="0">Bad Weather</option>
+                            </select>
+                            <select id="daySel">
+                                <option value="0">Sunday</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                            </select>
+                            <button type="button" class="btn btn-primary" id="predict">Predict</button>
+                        </div>
+                        <h3 class="text-center display-4" id="predRes"></h3>
+                    </div>
+                </div>
+            </div>
             <div class="p-3 mt-3">
                 <canvas id="myChart" width="500px" height="200px"></canvas>
             </div>

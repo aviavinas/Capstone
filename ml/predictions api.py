@@ -22,7 +22,7 @@ def engineApi(request):
     def prediction(time, Weather):
         loaded_model = tf.keras.models.load_model(get_file('modelFile', item['model']))
         predictions=np.round(loaded_model.predict(data(time, Weather)))
-        result = str(int(predictions[0][0]))
+        result = str(abs(int(predictions[0][0])))
         print("Result @ ",time,":",result)
         return result
 

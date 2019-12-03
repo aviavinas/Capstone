@@ -1,4 +1,3 @@
-
 /* Center the loader */
 #loader-cont {
   position: absolute;
@@ -76,3 +75,21 @@ thead tr {color: #666;}
 #weatherMap img {width: 30px; height: 30px; display: block; margin-bottom: 5px;}
 #weatherMap .col-1 {font-size: 12px;font-weight: 600;}
 #prod tr {cursor: pointer;}
+.act {background-color: #2f41df !important; color: #f3f3f3 !important;}
+select { padding:4px; margin: 12px;}
+#playBtn, #pauseBtn {width: 80px; height: 80px;}
+#playBtn {display: none;}
+.blink {
+   animation: blink-animation 1s steps(5, start) infinite;
+   -webkit-animation: blink-animation 1s steps(5, start) infinite;
+ }
+ @keyframes blink-animation {
+   to {
+     opacity: 0.3;
+   }
+ }
+ @-webkit-keyframes blink-animation {
+   to {
+      opacity: 0.3;
+   }
+ }
