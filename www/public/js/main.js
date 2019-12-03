@@ -1,5 +1,5 @@
 var chart, chartLabel=[];
-const maxHr = 24, minHr = 10;
+const maxHr = 22, minHr = 10;
 var curHour = new Date().getHours();
 curHour = curHour<minHr?minHr:curHour;
 curHour = curHour>maxHr?maxHr:curHour;
@@ -26,22 +26,6 @@ function drawChart(data) {
     });    
 }
 
-var pie = new Chart(document.getElementById('myPie').getContext('2d'), {
-    type: 'pie',
-    data: {
-        datasets: [{
-            data: [63,41],
-            backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 255, 255, 1)'
-            ],
-            borderWidth: 0
-        }]
-    }
-});
-pie.canvas.style.height = '75px';
-pie.canvas.style.width = '75px';
-
 // Initialize Firebase
 firebase.initializeApp({
     apiKey: "AIzaSyDxSdGq5JDDD5QZlQxwvqURjyT7Rpgmu5c",
@@ -52,10 +36,6 @@ firebase.initializeApp({
 });
 
 const db = firebase.firestore();
-
-function daysLeft(sec) {
-    return parseInt((sec-((new Date())/1000))/86400);
-}
 
 function getProdList() {
     var htm = "";
